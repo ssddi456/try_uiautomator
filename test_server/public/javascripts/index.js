@@ -1,8 +1,5 @@
 var tests = {
-  'https://jin.baidu.com': 'https://jin.baidu.com/',
-  'https://icash.baidu.com': 'https://icash.baidu.com/static/cloan/pkg/image/page/activity/pinzhuan/pinzhuan-pc/img/pc-header_18df318.png',
-  'https://www.baifubao.com': 'https://www.baifubao.com/',
-  'https://co.baifubao.com': 'https://co.baifubao.com/content/pc_wallet_index/images/index-img-slider-0.jpg',
+  '': ''
 };
 
 function msgBlock(msg) {
