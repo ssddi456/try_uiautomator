@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-  1
-from urllib import urlencode
+from urllib import urlencode, quote
 import urllib2 as urllib
 import json
 
@@ -74,6 +74,7 @@ def testAliPay():
       result['alipay'][k]  = 1
       print e
 
+    d.screenshot( 'alipay' + quote(k, '') + str(time.time()) + '.png');
     d.press.back()
 
 
@@ -97,14 +98,16 @@ def testWechart() :
     d(text=u"扫一扫").wait.exists(timeout=3000)
     d(text=u"扫一扫").click.wait()
 
+    moreButtonResId = 'com.tencent.mm:id/j1';
+    selectFromGallaryResId = 'com.tencent.mm:id/jr';
+    gallaryPicResId = 'com.tencent.mm:id/agt';
+    d(resourceId=moreButtonResId).wait.exists(timeout=3000)
+    d(resourceId=moreButtonResId).click.wait()
 
-    d(resourceId="com.tencent.mm:id/iw").wait.exists(timeout=3000)
-    d(resourceId="com.tencent.mm:id/iw").click.wait()
+    d(resourceId=selectFromGallaryResId, instance=1).wait.exists(timeout=3000)
+    d(resourceId=selectFromGallaryResId, instance=1).click.wait()
 
-    d(resourceId="com.tencent.mm:id/jm", instance=1).wait.exists(timeout=3000)
-    d(resourceId="com.tencent.mm:id/jm", instance=1).click.wait()
-
-    d(resourceId=u"com.tencent.mm:id/gv", instance=qrcodeIndex[k]).click.wait()
+    d(resourceId=gallaryPicResId, instance=qrcodeIndex[k]).click.wait()
 
     time.sleep(10)
 
@@ -114,7 +117,6 @@ def testWechart() :
     result['wechat'][k]  = 1
 
     d.press.back()
-
 
 testAliPay()
 testWechart()
