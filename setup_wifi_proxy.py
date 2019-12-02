@@ -5,6 +5,10 @@ import time
 from subprocess import Popen
 from optparse import OptionParser
 
+<<<<<<< 87af41f6859cc6bcca1eb30cfd468cc7c2096a08
+=======
+d = u2.connect("192.168.1.110:5555")
+>>>>>>> update
 
 import socket
 
@@ -42,22 +46,32 @@ wait_and_click(
 print('click current wifi detail')
 wait_and_click(className='android.widget.TextView', index=0)
 
+<<<<<<< 87af41f6859cc6bcca1eb30cfd468cc7c2096a08
 
 d(resourceId='com.android.settings:id/dialog_scrollview').wait(3)
 d(resourceId='com.android.settings:id/dialog_scrollview').scroll.vert.forward(steps=10)
+=======
+config_dialog = d(resourceId='com.android.settings:id/dialog_scrollview')
+config_dialog.wait(3)
+config_dialog.scroll.vert.forward(steps=10)
+>>>>>>> update
 
 print('click current wifi advanted detail')
 wait_and_click(
     resourceId='com.android.settings:id/wifi_advanced_togglebox')
 d.press("back")
 
-d(resourceId='com.android.settings:id/dialog_scrollview').scroll.vert.forward(steps=10)
+config_dialog.scroll.vert.forward(steps=10)
 print('click current wifi proxy config')
 wait_and_click(
     resourceId='com.android.settings:id/proxy_settings')
 wait_and_click(
     index=1, className='android.widget.CheckedTextView')
+<<<<<<< 87af41f6859cc6bcca1eb30cfd468cc7c2096a08
 d(resourceId='com.android.settings:id/dialog_scrollview').scroll.vert.forward(steps=30)
+=======
+config_dialog.scroll.vert.forward(steps=20)
+>>>>>>> update
 
 print('setup current wifi proxy config')
 d(resourceId='com.android.settings:id/proxy_hostname').set_text(localip)
