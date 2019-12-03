@@ -1,16 +1,22 @@
 # -*- coding: utf-8 -*-
 
-from uiautomator import Device
+import uiautomator2 as u2
 import time
 from subprocess import Popen
 
-d = Device("192.168.1.110:5555")
-d.screen.on()
+import socket
 
-Popen('adb shell "am start -n com.android.settings/.Settings"')
+localip = socket.gethostbyname_ex(socket.gethostname())[-1][0]
+
+deviceSerise = "172.30.21.109:5555"
+# Popen('adb connect ' + deviceSerise)
+d = u2.connect(deviceSerise)
+# d.screen.on()
+
+Popen('adb -s ' + deviceSerise + ' shell "am start -n com.android.settings/.Settings"')
 
 def wait_and_click(**kwargs):
-    d(**kwargs).wait.exists(timeout=3000)
+    d(**kwargs).wait(3)
     d(**kwargs).click()
 
 print('click wlan setting')
@@ -22,7 +28,7 @@ wait_and_click(
 print('click current wifi detail')
 wait_and_click(className='android.widget.TextView', index=0)
 
-d(resourceId='com.android.settings:id/dialog_scrollview').wait.exists(timeout=3000)
+d(resourceId='com.android.settings:id/dialog_scrollview').wait(3)
 d(resourceId='com.android.settings:id/dialog_scrollview').scroll.vert.forward(steps=10)
 
 print('click current wifi advanted detail')
@@ -35,10 +41,10 @@ wait_and_click(
     resourceId='com.android.settings:id/proxy_settings')
 wait_and_click(
     index=1, className='android.widget.CheckedTextView')
-d(resourceId='com.android.settings:id/dialog_scrollview').scroll.vert.forward(steps=20)
+d(resourceId='com.android.settings:id/dialog_scrollview').scroll.vert.forward(steps=30)
 
 print('setup current wifi proxy config')
-d(resourceId='com.android.settings:id/proxy_hostname').set_text('192.168.1.112')
+d(resourceId='com.android.settings:id/proxy_hostname').set_text(localip)
 d(resourceId='com.android.settings:id/proxy_port').set_text('8888')
 
 wait_and_click(

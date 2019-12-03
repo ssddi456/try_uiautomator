@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-  1
+
+# this one based on python2 and uiautomator
+
 from urllib import urlencode, quote
 import urllib2 as urllib
 import json
@@ -34,7 +37,7 @@ d.screen.on()
 with open('config.json') as f:
   qrcodeIndex = json.loads(f.read())
 
-print qrcodeIndex
+print(qrcodeIndex)
 
 report_url = 'http://172.22.166.33:8008/test_log'
 
@@ -48,7 +51,7 @@ def testAliPay():
   time.sleep(1)
   result['alipay'] = {}
   for k in qrcodeIndex:
-    print k
+    print(k)
     d.wait.update()
     d(text=u"扫一扫").click.wait()
 
@@ -56,23 +59,23 @@ def testAliPay():
 
     d(resourceId=u"com.alipay.mobile.beehive:id/iv_photo", instance= qrcodeIndex[k]).click.wait()
     time.sleep(3)
-    print 'if i am blocked?'
+    print('if i am blocked?')
     try:
       d(resourceId=u"com.alipay.mobile.nebula:id/h5_tv_title").wait.exists(timeout=3)
       view = d(resourceId=u"com.alipay.mobile.nebula:id/h5_tv_title")
       for i in xrange(1,4):
         title_text = view.info['text']
-        print 'title text ' + title_text.encode('utf8')
+        print('title text ' + title_text.encode('utf8'))
         if view.info['text'] == u'安全提示':
           time.sleep(1)
         else:
           raise Exception('yes i am ok')
-      print 'i am blocked ' + k + ' under alipay'
+      print('i am blocked ' + k + ' under alipay')
       result['alipay'][k]  = 0
     except Exception, e:
-      print 'i am not blocked ' + k + ' under alipay'
+      print('i am not blocked ' + k + ' under alipay')
       result['alipay'][k]  = 1
-      print e
+      print(e)
 
     d.screenshot( 'alipay' + quote(k, '') + str(time.time()) + '.png');
     d.press.back()
@@ -88,7 +91,7 @@ def testWechart() :
   result['wechat'] = {}
 
   for k in qrcodeIndex:
-    print k
+    print(k)
 
     for view in d(className="android.widget.RelativeLayout", clickable=True):
       if view.info[u'contentDescription'] == u'更多功能按钮':
@@ -111,8 +114,8 @@ def testWechart() :
 
     time.sleep(10)
 
-    print 'if i am be blocked?'
-    print 'i am not blocked ' + k + ' under wechat'
+    print('if i am be blocked?')
+    print('i am not blocked ' + k + ' under wechat')
 
     result['wechat'][k]  = 1
 
